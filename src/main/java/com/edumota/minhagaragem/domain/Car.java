@@ -42,4 +42,10 @@ public class Car {
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Expense> expenses = new ArrayList<>();
 
+    public Car(Long id, String name, String year, String colour) {
+        this.id = id;
+        this.name = name;
+        this.year = year;
+        this.colour = colour;
+    }
 }
