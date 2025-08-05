@@ -25,11 +25,25 @@ public class Expense {
 
     @Enumerated(EnumType.STRING)
     private ExpenseType type;
+
+    @Column(updatable = false)
     private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
+
+    public Expense(Long id, Double price, String description, ExpenseType type) {
+        this.id = id;
+        this.price = price;
+        this.description = description;
+        this.type = type;
+    }
 
     public enum ExpenseType {
 
