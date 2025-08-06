@@ -3,6 +3,7 @@ package com.edumota.minhagaragem.controllers;
 import com.edumota.minhagaragem.controllers.dto.LoginRequest;
 import com.edumota.minhagaragem.controllers.dto.LoginResponse;
 import com.edumota.minhagaragem.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
 
+@RequiredArgsConstructor
 @RestController
 public class TokenController {
 
@@ -23,12 +25,6 @@ public class TokenController {
     private final UserRepository userRepository;
 
     private final BCryptPasswordEncoder passwordEncoder;
-
-    public TokenController(JwtEncoder jwtEncoder, UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.jwtEncoder = jwtEncoder;
-        this.userRepository = userRepository;
-        this.passwordEncoder = bCryptPasswordEncoder;
-    }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {

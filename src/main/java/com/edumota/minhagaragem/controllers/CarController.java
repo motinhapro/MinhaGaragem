@@ -4,18 +4,19 @@ import com.edumota.minhagaragem.domain.Car;
 import com.edumota.minhagaragem.domain.dto.CarDTO;
 import com.edumota.minhagaragem.domain.dto.CarPostDTO;
 import com.edumota.minhagaragem.services.CarService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/cars")
 public class CarController {
 
-    @Autowired
-    private CarService service;
+
+    private final CarService service;
 
     @GetMapping
     public ResponseEntity<List<CarDTO>> findAll() {
