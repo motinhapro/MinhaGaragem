@@ -3,16 +3,16 @@ package com.edumota.minhagaragem.services;
 import com.edumota.minhagaragem.domain.Car;
 import com.edumota.minhagaragem.domain.dto.CarPostDTO;
 import com.edumota.minhagaragem.repositories.CarRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class CarService {
 
-    @Autowired
-    private CarRepository repository;
+    private final CarRepository repository;
 
     public List<Car> findAll() {
         return repository.findAll();

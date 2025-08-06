@@ -3,16 +3,16 @@ package com.edumota.minhagaragem.services;
 import com.edumota.minhagaragem.domain.Expense;
 import com.edumota.minhagaragem.domain.dto.ExpensePostDTO;
 import com.edumota.minhagaragem.repositories.ExpenseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class ExpenseService {
 
-    @Autowired
-    private ExpenseRepository repository;
+    private final ExpenseRepository repository;
 
     public List<Expense> findAll() {
         return repository.findAll();

@@ -22,7 +22,7 @@ public class TokenController {
 
     private final UserRepository userRepository;
 
-    private BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public TokenController(JwtEncoder jwtEncoder, UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.jwtEncoder = jwtEncoder;
@@ -43,7 +43,7 @@ public class TokenController {
 
         var claims = JwtClaimsSet.builder()
                 .issuer("mybackend")
-                .subject(user.get().getId())
+                .subject(user.get().getId().toString())
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiresIn))
                 .build();
