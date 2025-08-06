@@ -11,7 +11,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(of = "id")
 
 @Entity
 @Table(name = "tb_users")
@@ -19,7 +19,6 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @EqualsAndHashCode.Include
     private UUID id;
 
     private String username;
@@ -27,5 +26,13 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Car> cars = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tb_users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
 }
 
