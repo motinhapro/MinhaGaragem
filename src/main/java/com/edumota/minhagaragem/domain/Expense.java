@@ -2,6 +2,7 @@ package com.edumota.minhagaragem.domain;
 
 import com.edumota.minhagaragem.domain.enums.ExpenseTypes;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -23,5 +24,11 @@ public class Expense {
     @Column(name = "type", nullable = false)
     private ExpenseTypes expenseType;
 
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private Instant createdAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_id", nullable = false)
+    private Car car;
 }

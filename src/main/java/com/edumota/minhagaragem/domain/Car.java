@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -39,4 +41,11 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(
+            mappedBy = "car",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<Expense> expenses = new HashSet<>();
 }
