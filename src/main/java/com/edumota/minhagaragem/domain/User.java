@@ -27,6 +27,9 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(nullable = false, unique = true)
+    private String email;
+
     @Column(name = "password_hash", nullable = false)
     private String password;
 
@@ -40,4 +43,11 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Car> cars = new HashSet<>();
+
+    public User(String username, String email, String password, Role role) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
 }
