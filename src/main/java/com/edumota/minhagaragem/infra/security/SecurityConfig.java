@@ -32,7 +32,8 @@ public class SecurityConfig {
     @Value("${privateRSA.key}")
     private RSAPrivateKey privateKey;
 
-    private SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
                 .authorizeHttpRequests(authorize -> authorize
