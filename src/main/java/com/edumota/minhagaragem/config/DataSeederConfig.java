@@ -5,9 +5,11 @@ import com.edumota.minhagaragem.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 @RequiredArgsConstructor
 @Configuration
+@Order(1)
 public class DataSeederConfig implements CommandLineRunner {
 
     private final RoleRepository roleRepository;
