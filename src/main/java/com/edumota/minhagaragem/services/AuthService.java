@@ -4,6 +4,8 @@ import com.edumota.minhagaragem.domain.DTO.AuthResponseDTO;
 import com.edumota.minhagaragem.domain.DTO.LoginRequestDTO;
 import com.edumota.minhagaragem.domain.DTO.RegisterRequestDTO;
 import com.edumota.minhagaragem.domain.User;
+import com.edumota.minhagaragem.exceptions.EmailAlreadyExistsException;
+import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import com.edumota.minhagaragem.repositories.RoleRepository;
 import com.edumota.minhagaragem.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -57,11 +59,11 @@ public class AuthService {
         var user = userRepository.findByEmail(request.email());
 
         if(user.isPresent()) {
-            throw new BadCredentialsException("Usuário já existe.");
+            throw new EmailAlreadyExistsException("Usuário já existe.");
         }
 
         var role = roleRepository.findByName("ROLE_USER")
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException("Role não pode ser encontrada."));
 
         userRepository.save(new User(request.username(), request.email(), passwordEncoder.encode(request.password()), role));
     }
