@@ -1,8 +1,11 @@
 package com.edumota.minhagaragem.infra.exception;
 
+import java.time.LocalDateTime;
+
 public record ApiErrorResponse(
-        int statusCode,
+        LocalDateTime timestamp,
+        int status,
+        String error,
         String message,
-        String path,
-        java.time.Instant timestamp
+        String path
 ) {}
