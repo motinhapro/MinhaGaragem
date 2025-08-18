@@ -2,8 +2,10 @@ package com.edumota.minhagaragem.controllers;
 
 import com.edumota.minhagaragem.domain.DTO.AuthResponseDTO;
 import com.edumota.minhagaragem.domain.DTO.LoginRequestDTO;
+import com.edumota.minhagaragem.domain.DTO.RegisterRequestDTO;
 import com.edumota.minhagaragem.services.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,5 +22,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginRequestDTO request) {
         return ResponseEntity.ok().body(service.login(request));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Void> register(@RequestBody RegisterRequestDTO request) {
+        service.register(request);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
