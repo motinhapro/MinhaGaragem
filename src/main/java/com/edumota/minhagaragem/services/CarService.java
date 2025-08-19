@@ -1,7 +1,11 @@
 package com.edumota.minhagaragem.services;
 
+import com.edumota.minhagaragem.domain.Car;
 import com.edumota.minhagaragem.domain.DTO.CarDTO;
+import com.edumota.minhagaragem.domain.DTO.CarPostDTO;
+import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import com.edumota.minhagaragem.repositories.CarRepository;
+import com.edumota.minhagaragem.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,8 +19,17 @@ public class CarService {
 
     private final CarRepository carRepository;
 
-    public Page<CarDTO> findMyCars(UUID id, Pageable pageable) {
+    private final UserRepository userRepository;
 
+    public Page<CarDTO> findMyCars(UUID id, Pageable pageable) {
         return carRepository.findByUserId(id, pageable).map(CarDTO::new);
+    }
+
+    public CarDTO insert(UUID id, CarPostDTO car) {
+
+        var user = userRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Usuário não encontrado."));
+
+        return new CarDTO(new Car(car.model(), car.brand(), car.year(), car.colour(), user));
     }
 }
