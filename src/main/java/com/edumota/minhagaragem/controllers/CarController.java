@@ -1,7 +1,8 @@
 package com.edumota.minhagaragem.controllers;
 
-import com.edumota.minhagaragem.domain.DTO.CarDTO;
-import com.edumota.minhagaragem.domain.DTO.CarPostDTO;
+import com.edumota.minhagaragem.domain.DTO.car.CarDTO;
+import com.edumota.minhagaragem.domain.DTO.car.CarPostDTO;
+import com.edumota.minhagaragem.domain.DTO.car.CarUpdateDTO;
 import com.edumota.minhagaragem.services.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,5 +36,10 @@ public class CarController {
     public ResponseEntity<Void> delete(@PathVariable Long id, Authentication authentication) {
         service.delete(id, UUID.fromString(authentication.getName()));
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CarDTO> update(@PathVariable Long id, @RequestBody CarUpdateDTO car, Authentication authentication) {
+        return ResponseEntity.ok().body(service.update(id, car, UUID.fromString(authentication.getName())));
     }
 }

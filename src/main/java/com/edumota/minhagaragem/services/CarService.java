@@ -3,6 +3,7 @@ package com.edumota.minhagaragem.services;
 import com.edumota.minhagaragem.domain.Car;
 import com.edumota.minhagaragem.domain.DTO.car.CarDTO;
 import com.edumota.minhagaragem.domain.DTO.car.CarPostDTO;
+import com.edumota.minhagaragem.domain.DTO.car.CarUpdateDTO;
 import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import com.edumota.minhagaragem.repositories.CarRepository;
 import com.edumota.minhagaragem.repositories.UserRepository;
@@ -44,5 +45,22 @@ public class CarService {
         }
 
         carRepository.deleteById(id);
+    }
+
+    public CarDTO update(Long id, CarUpdateDTO newCar, UUID userId) {
+
+        var car = carRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Veículo não encontrado."));
+
+        if(!car.getUser().getId().equals(userId)) {
+            throw new AccessDeniedException("Acesso negado. Você não é proprietário deste veículo.");
+        }
+
+        car.setModel(newCar.model());
+        car.setBrand(newCar.brand());
+        car.setYear(newCar.year());
+        car.setColour(newCar.colour());
+
+        return new CarDTO(carRepository.save(car));
     }
 }
