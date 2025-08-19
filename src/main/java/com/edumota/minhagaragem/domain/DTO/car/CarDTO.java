@@ -1,4 +1,4 @@
-package com.edumota.minhagaragem.domain.DTO;
+package com.edumota.minhagaragem.domain.DTO.car;
 
 import com.edumota.minhagaragem.domain.Car;
 

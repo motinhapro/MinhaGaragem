@@ -1,8 +1,8 @@
 package com.edumota.minhagaragem.services;
 
 import com.edumota.minhagaragem.domain.Car;
-import com.edumota.minhagaragem.domain.DTO.CarDTO;
-import com.edumota.minhagaragem.domain.DTO.CarPostDTO;
+import com.edumota.minhagaragem.domain.DTO.car.CarDTO;
+import com.edumota.minhagaragem.domain.DTO.car.CarPostDTO;
 import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import com.edumota.minhagaragem.repositories.CarRepository;
 import com.edumota.minhagaragem.repositories.UserRepository;

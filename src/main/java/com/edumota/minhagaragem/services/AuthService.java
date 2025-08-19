@@ -1,22 +1,20 @@
 package com.edumota.minhagaragem.services;
 
-import com.edumota.minhagaragem.domain.DTO.AuthResponseDTO;
-import com.edumota.minhagaragem.domain.DTO.LoginRequestDTO;
-import com.edumota.minhagaragem.domain.DTO.RegisterRequestDTO;
+import com.edumota.minhagaragem.domain.DTO.auth.AuthResponseDTO;
+import com.edumota.minhagaragem.domain.DTO.auth.LoginRequestDTO;
+import com.edumota.minhagaragem.domain.DTO.auth.RegisterRequestDTO;
 import com.edumota.minhagaragem.domain.User;
 import com.edumota.minhagaragem.exceptions.EmailAlreadyExistsException;
 import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import com.edumota.minhagaragem.repositories.RoleRepository;
 import com.edumota.minhagaragem.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 

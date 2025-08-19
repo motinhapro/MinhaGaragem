@@ -1,8 +1,8 @@
 package com.edumota.minhagaragem.controllers;
 
-import com.edumota.minhagaragem.domain.DTO.AuthResponseDTO;
-import com.edumota.minhagaragem.domain.DTO.LoginRequestDTO;
-import com.edumota.minhagaragem.domain.DTO.RegisterRequestDTO;
+import com.edumota.minhagaragem.domain.DTO.auth.AuthResponseDTO;
+import com.edumota.minhagaragem.domain.DTO.auth.LoginRequestDTO;
+import com.edumota.minhagaragem.domain.DTO.auth.RegisterRequestDTO;
 import com.edumota.minhagaragem.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
