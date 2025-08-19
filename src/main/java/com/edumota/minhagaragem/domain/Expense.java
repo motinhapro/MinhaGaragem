@@ -1,6 +1,6 @@
 package com.edumota.minhagaragem.domain;
 
-import com.edumota.minhagaragem.domain.enums.ExpenseTypes;
+import com.edumota.minhagaragem.domain.enums.ExpenseType;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -22,7 +22,7 @@ public class Expense {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    private ExpenseTypes expenseType;
+    private ExpenseType expenseType;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

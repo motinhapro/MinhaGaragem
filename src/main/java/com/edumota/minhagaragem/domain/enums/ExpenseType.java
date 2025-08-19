@@ -1,6 +1,6 @@
 package com.edumota.minhagaragem.domain.enums;
 
-public enum ExpenseTypes {
+public enum ExpenseType {
     MECANICA,
     DOCUMENTO,
     VISTORIA,
