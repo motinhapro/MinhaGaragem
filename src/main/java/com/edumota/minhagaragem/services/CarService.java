@@ -9,6 +9,7 @@ import com.edumota.minhagaragem.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -31,5 +32,17 @@ public class CarService {
                 .orElseThrow(()-> new ResourceNotFoundException("Usuário não encontrado."));
 
         return new CarDTO(new Car(car.model(), car.brand(), car.year(), car.colour(), user));
+    }
+
+    public void delete(Long id, UUID userId) {
+
+        var car = carRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Veículo não encontrado."));
+
+        if(!car.getUser().getId().equals(userId)) {
+            throw new AccessDeniedException("Acesso negado. Você não é proprietário deste veículo.");
+        }
+
+        carRepository.deleteById(id);
     }
 }

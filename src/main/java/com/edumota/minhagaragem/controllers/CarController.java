@@ -30,4 +30,10 @@ public class CarController {
     public ResponseEntity<CarDTO> insert(@RequestBody CarPostDTO car, Authentication authentication) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.insert(UUID.fromString(authentication.getName()), car));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id, Authentication authentication) {
+        service.delete(id, UUID.fromString(authentication.getName()));
+        return ResponseEntity.noContent().build();
+    }
 }
