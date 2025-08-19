@@ -48,4 +48,12 @@ public class Car {
             orphanRemoval = true
     )
     private Set<Expense> expenses = new HashSet<>();
+
+    public Car(String model, String brand, int year, String colour, User user) {
+        this.model = model;
+        this.brand = brand;
+        this.year = year;
+        this.colour = colour;
+        this.user = user;
+    }
 }
