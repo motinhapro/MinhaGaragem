@@ -49,7 +49,7 @@ public class CarController {
     }
 
     @GetMapping("/{id}/expenses")
-    public ResponseEntity<ExpenseDTO> findMyExpensesByCar(@PathVariable Long id, Authentication authentication, Pageable pageable) {
-        return expenseService.findMyExpensesByCar(id, UUID.fromString(authentication.getName()), pageable);
+    public ResponseEntity<Page<ExpenseDTO>> findMyExpensesByCar(@PathVariable Long id, Authentication authentication, Pageable pageable) {
+        return ResponseEntity.ok().body(expenseService.findMyExpensesByCar(id, UUID.fromString(authentication.getName()), pageable));
     }
 }
