@@ -4,7 +4,7 @@ import com.edumota.minhagaragem.domain.DTO.car.CarDTO;
 import com.edumota.minhagaragem.domain.DTO.car.CarPostDTO;
 import com.edumota.minhagaragem.domain.DTO.car.CarUpdateDTO;
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseDTO;
-import com.edumota.minhagaragem.domain.Expense;
+import com.edumota.minhagaragem.domain.DTO.expense.ExpenseUpdateDTO;
 import com.edumota.minhagaragem.services.CarService;
 import com.edumota.minhagaragem.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -58,5 +57,10 @@ public class CarController {
     public ResponseEntity<Void> deleteMyExpenseByCar(@PathVariable Long id, @PathVariable Long expenseId, Authentication authentication) {
         expenseService.deleteMyExpenseByCar(id, expenseId, UUID.fromString(authentication.getName()));
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/expenses/{expenseId}")
+    public ResponseEntity<ExpenseDTO> updateMyExpenseByCar(@RequestBody ExpenseUpdateDTO newExpense, @PathVariable Long id, @PathVariable Long expenseId, Authentication authentication) {
+        return ResponseEntity.ok().body(expenseService.updateMyExpenseByCar(newExpense, id, expenseId, UUID.fromString(authentication.getName())));
     }
 }
