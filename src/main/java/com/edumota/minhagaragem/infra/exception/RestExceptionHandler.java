@@ -1,5 +1,6 @@
 package com.edumota.minhagaragem.infra.exception;
 
+import com.edumota.minhagaragem.exceptions.BadRequestException;
 import com.edumota.minhagaragem.exceptions.EmailAlreadyExistsException;
 import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,4 +41,19 @@ public class RestExceptionHandler {
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ApiErrorResponse> handleBadRequestException(BadRequestException e, HttpServletRequest request) {
+
+        ApiErrorResponse errorResponse = new ApiErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_GATEWAY.getReasonPhrase(),
+                e.getMessage(),
+                request.getRequestURI()
+        );
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
 }
