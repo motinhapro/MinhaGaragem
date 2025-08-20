@@ -3,7 +3,10 @@ package com.edumota.minhagaragem.controllers;
 import com.edumota.minhagaragem.domain.DTO.car.CarDTO;
 import com.edumota.minhagaragem.domain.DTO.car.CarPostDTO;
 import com.edumota.minhagaragem.domain.DTO.car.CarUpdateDTO;
+import com.edumota.minhagaragem.domain.DTO.expense.ExpenseDTO;
+import com.edumota.minhagaragem.domain.Expense;
 import com.edumota.minhagaragem.services.CarService;
+import com.edumota.minhagaragem.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,26 +23,33 @@ import java.util.UUID;
 @RequestMapping("/cars")
 public class CarController {
 
-    private final CarService service;
+    private final CarService carService;
+
+    private final ExpenseService expenseService;
 
     @GetMapping
     public ResponseEntity<Page<CarDTO>> findMyCars(Authentication authentication, Pageable pageable) {
-        return ResponseEntity.ok().body(service.findMyCars(UUID.fromString(authentication.getName()), pageable));
+        return ResponseEntity.ok().body(carService.findMyCars(UUID.fromString(authentication.getName()), pageable));
     }
 
     @PostMapping
     public ResponseEntity<CarDTO> insert(@RequestBody CarPostDTO car, Authentication authentication) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.insert(UUID.fromString(authentication.getName()), car));
+        return ResponseEntity.status(HttpStatus.CREATED).body(carService.insert(UUID.fromString(authentication.getName()), car));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id, Authentication authentication) {
-        service.delete(id, UUID.fromString(authentication.getName()));
+        carService.delete(id, UUID.fromString(authentication.getName()));
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CarDTO> update(@PathVariable Long id, @RequestBody CarUpdateDTO car, Authentication authentication) {
-        return ResponseEntity.ok().body(service.update(id, car, UUID.fromString(authentication.getName())));
+        return ResponseEntity.ok().body(carService.update(id, car, UUID.fromString(authentication.getName())));
+    }
+
+    @GetMapping("/{id}/expenses")
+    public ResponseEntity<ExpenseDTO> findMyExpensesByCar(@PathVariable Long id, Authentication authentication, Pageable pageable) {
+        return expenseService.findMyExpensesByCar(id, UUID.fromString(authentication.getName()), pageable);
     }
 }
