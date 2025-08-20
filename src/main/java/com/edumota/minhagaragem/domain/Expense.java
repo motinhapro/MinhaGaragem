@@ -39,4 +39,11 @@ public class Expense {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
+
+    public Expense(BigDecimal price, ExpenseType expenseType, String description, Car car) {
+        this.price = price;
+        this.expenseType = expenseType;
+        this.description = description;
+        this.car = car;
+    }
 }
