@@ -1,7 +1,9 @@
 package com.edumota.minhagaragem.services;
 
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseDTO;
+import com.edumota.minhagaragem.domain.DTO.expense.ExpensePostDTO;
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseUpdateDTO;
+import com.edumota.minhagaragem.domain.Expense;
 import com.edumota.minhagaragem.exceptions.BadRequestException;
 import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import com.edumota.minhagaragem.repositories.CarRepository;
@@ -21,6 +23,18 @@ public class ExpenseService {
     private final ExpenseRepository expenseRepository;
 
     private final CarRepository carRepository;
+
+    public ExpenseDTO insertMyExpenseByCar(ExpensePostDTO newExpense, Long carId, UUID userId) {
+
+        var car = carRepository.findById(carId)
+                .orElseThrow(() -> new ResourceNotFoundException("Veículo não encontrado."));
+
+        if(!car.getUser().getId().equals(userId)) {
+            throw new AccessDeniedException("Acesso negado. Você não é proprietário deste veículo.");
+        }
+
+        return new ExpenseDTO(new Expense(newExpense.price(), newExpense.expenseType(), newExpense.description(), car));
+    }
 
     public Page<ExpenseDTO> findMyExpensesByCar(Long carId, UUID userId, Pageable pageable) {
 

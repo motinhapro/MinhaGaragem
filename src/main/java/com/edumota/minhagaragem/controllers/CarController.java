@@ -4,6 +4,7 @@ import com.edumota.minhagaragem.domain.DTO.car.CarDTO;
 import com.edumota.minhagaragem.domain.DTO.car.CarPostDTO;
 import com.edumota.minhagaragem.domain.DTO.car.CarUpdateDTO;
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseDTO;
+import com.edumota.minhagaragem.domain.DTO.expense.ExpensePostDTO;
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseUpdateDTO;
 import com.edumota.minhagaragem.services.CarService;
 import com.edumota.minhagaragem.services.ExpenseService;
@@ -46,6 +47,11 @@ public class CarController {
     @PutMapping("/{id}")
     public ResponseEntity<CarDTO> update(@PathVariable Long id, @RequestBody CarUpdateDTO car, Authentication authentication) {
         return ResponseEntity.ok().body(carService.update(id, car, UUID.fromString(authentication.getName())));
+    }
+
+    @PostMapping("/{id}/expenses")
+    public ResponseEntity<ExpenseDTO> insertMyExpenseByCar(@RequestBody ExpensePostDTO newExpense,@PathVariable Long id, Authentication authentication) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(expenseService.insertMyExpenseByCar(newExpense, id, UUID.fromString(authentication.getName())));
     }
 
     @GetMapping("/{id}/expenses")
