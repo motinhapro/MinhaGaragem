@@ -2,6 +2,7 @@ package com.edumota.minhagaragem.controllers;
 
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseDTO;
 import com.edumota.minhagaragem.services.ExpenseService;
+import com.edumota.minhagaragem.services.FinanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,14 +16,15 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/expenses")
-public class ExpenseController {
+@RequestMapping("/finances")
+public class FinanceController {
 
-    private final ExpenseService service;
+    private final FinanceService financeService;
 
-    @GetMapping
+    private final ExpenseService expenseService;
+
+    @GetMapping("/expenses")
     public ResponseEntity<Page<ExpenseDTO>> findMyExpenses(Authentication authentication, Pageable pageable) {
-        return ResponseEntity.ok().body(service.findMyExpenses(UUID.fromString(authentication.getName()), pageable));
+        return ResponseEntity.ok().body(expenseService.findMyExpenses(UUID.fromString(authentication.getName()), pageable));
     }
-
 }
