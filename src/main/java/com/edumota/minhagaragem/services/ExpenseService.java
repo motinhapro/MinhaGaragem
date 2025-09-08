@@ -24,6 +24,10 @@ public class ExpenseService {
 
     private final CarRepository carRepository;
 
+    public Page<ExpenseDTO> findMyExpenses(UUID userId, Pageable pageable) {
+        return expenseRepository.findByUserId(userId, pageable).map(ExpenseDTO::new);
+    }
+
     public ExpenseDTO insertMyExpenseByCar(ExpensePostDTO newExpense, Long carId, UUID userId) {
 
         var car = carRepository.findById(carId)
