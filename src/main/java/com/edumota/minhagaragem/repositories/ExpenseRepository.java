@@ -19,4 +19,10 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
     @Query("SELECT SUM(e.price) FROM Expense e WHERE e.car.user.id = :userId")
     BigDecimal findTotalSpendingByUserId(@Param("userId") UUID userId);
+
+    @Query("SELECT new com.edumota.minhagaragem.domain.DTO.finance.SpendingByCategoryDTO(e.type, SUM(e.price)) " +
+            "FROM Expense where e.car.user.id = :userId " +
+            "GROUP BY e.type " +
+            "ORDER BY SUM(e.price) DESC")
+    BigDecimal findSpendingGroupedByType(@Param("userId") UUID userId);
 }
