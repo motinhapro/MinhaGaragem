@@ -1,6 +1,7 @@
 package com.edumota.minhagaragem.repositories;
 
 import com.edumota.minhagaragem.domain.Car;
+import com.edumota.minhagaragem.domain.DTO.finance.SpendingByCategoryDTO;
 import com.edumota.minhagaragem.domain.Expense;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
@@ -24,5 +26,5 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
             "FROM Expense where e.car.user.id = :userId " +
             "GROUP BY e.type " +
             "ORDER BY SUM(e.price) DESC")
-    BigDecimal findSpendingGroupedByType(@Param("userId") UUID userId);
+    List<SpendingByCategoryDTO> findSpendingGroupedByType(@Param("userId") UUID userId);
 }
