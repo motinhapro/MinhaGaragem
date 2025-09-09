@@ -1,11 +1,13 @@
 package com.edumota.minhagaragem.services;
 
+import com.edumota.minhagaragem.domain.DTO.finance.SpendingByCategoryDTO;
 import com.edumota.minhagaragem.domain.DTO.finance.TotalSpendingDTO;
 import com.edumota.minhagaragem.repositories.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -22,5 +24,9 @@ public class FinanceService {
         }
 
         return new TotalSpendingDTO(total);
+    }
+
+    public List<SpendingByCategoryDTO> getSpendingByType(UUID userId) {
+        return expenseRepository.findSpendingGroupedByType(userId);
     }
 }

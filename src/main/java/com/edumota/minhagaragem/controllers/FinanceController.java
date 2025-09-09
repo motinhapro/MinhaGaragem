@@ -1,6 +1,7 @@
 package com.edumota.minhagaragem.controllers;
 
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseDTO;
+import com.edumota.minhagaragem.domain.DTO.finance.SpendingByCategoryDTO;
 import com.edumota.minhagaragem.domain.DTO.finance.TotalSpendingDTO;
 import com.edumota.minhagaragem.services.ExpenseService;
 import com.edumota.minhagaragem.services.FinanceService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -29,8 +31,13 @@ public class FinanceController {
         return ResponseEntity.ok().body(expenseService.findMyExpenses(UUID.fromString(authentication.getName()), pageable));
     }
 
-    @GetMapping("/total-spending")
+    @GetMapping("/summary/total")
     public ResponseEntity<TotalSpendingDTO> getTotalSpending(Authentication authentication) {
         return ResponseEntity.ok().body(financeService.getTotalSpending(UUID.fromString(authentication.getName())));
+    }
+
+    @GetMapping("/summary/by-category")
+    public ResponseEntity<List<SpendingByCategoryDTO>> getSpendingByType(Authentication authentication) {
+        return ResponseEntity.ok().body(financeService.getSpendingByType(UUID.fromString(authentication.getName())));
     }
 }
