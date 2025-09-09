@@ -1,6 +1,7 @@
 package com.edumota.minhagaragem.controllers;
 
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseDTO;
+import com.edumota.minhagaragem.domain.DTO.finance.TotalSpendingDTO;
 import com.edumota.minhagaragem.services.ExpenseService;
 import com.edumota.minhagaragem.services.FinanceService;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,10 @@ public class FinanceController {
     @GetMapping("/expenses")
     public ResponseEntity<Page<ExpenseDTO>> findMyExpenses(Authentication authentication, Pageable pageable) {
         return ResponseEntity.ok().body(expenseService.findMyExpenses(UUID.fromString(authentication.getName()), pageable));
+    }
+
+    @GetMapping("/total-spending")
+    public ResponseEntity<TotalSpendingDTO> getTotalSpending(Authentication authentication) {
+        return ResponseEntity.ok().body(financeService.getTotalSpending(UUID.fromString(authentication.getName())));
     }
 }

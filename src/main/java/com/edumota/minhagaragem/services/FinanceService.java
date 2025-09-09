@@ -14,7 +14,7 @@ public class FinanceService {
 
     private final ExpenseRepository expenseRepository;
 
-    public TotalSpendingDTO calculateTotalSpending(UUID userId) {
+    public TotalSpendingDTO getTotalSpending(UUID userId) {
         BigDecimal total = expenseRepository.findTotalSpendingByUserId(userId);
 
         if(total == null) {
