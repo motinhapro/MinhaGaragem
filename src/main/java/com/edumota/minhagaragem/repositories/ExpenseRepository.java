@@ -10,7 +10,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
@@ -26,4 +28,13 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
             "GROUP BY e.expenseType " +
             "ORDER BY SUM(e.price) DESC")
     List<SpendingByCategoryDTO> findSpendingGroupedByType(@Param("userId") UUID userId);
+
+    @Query("SELECT sum(e.price) from Expense e WHERE e.car.user.id = :userId " +
+            "AND (cast(:startDate as date) IS NULL OR e.createdAt >= :startDate) " +
+            "AND (cast(:endDate as date) IS NULL OR e.createdAt <= :endDate)")
+    Optional<BigDecimal> findTotalSpendingByUserAndPeriod(
+            @Param("userId") UUID userId,
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate
+    );
 }
