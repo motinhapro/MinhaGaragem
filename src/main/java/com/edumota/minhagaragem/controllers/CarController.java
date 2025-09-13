@@ -29,8 +29,10 @@ public class CarController {
     private final ExpenseService expenseService;
 
     @GetMapping
-    public ResponseEntity<Page<CarDTO>> findMyCars(Authentication authentication, Pageable pageable) {
-        return ResponseEntity.ok().body(carService.findMyCars(UUID.fromString(authentication.getName()), pageable));
+    public ResponseEntity<Page<CarDTO>> findMyCars(
+            Authentication authentication, Pageable pageable,
+            @RequestParam(required = false) String brand, @RequestParam(required = false) String model) {
+        return ResponseEntity.ok().body(carService.findMyCars(UUID.fromString(authentication.getName()), pageable, brand, model));
     }
 
     @PostMapping

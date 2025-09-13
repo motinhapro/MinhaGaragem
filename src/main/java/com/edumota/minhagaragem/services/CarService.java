@@ -7,9 +7,11 @@ import com.edumota.minhagaragem.domain.DTO.car.CarUpdateDTO;
 import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import com.edumota.minhagaragem.repositories.CarRepository;
 import com.edumota.minhagaragem.repositories.UserRepository;
+import com.edumota.minhagaragem.repositories.specification.CarSpecifications;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +25,15 @@ public class CarService {
 
     private final UserRepository userRepository;
 
-    public Page<CarDTO> findMyCars(UUID id, Pageable pageable) {
-        return carRepository.findByUserId(id, pageable).map(CarDTO::new);
+    public Page<CarDTO> findMyCars(UUID id, Pageable pageable, String brand, String model) {
+
+        Specification<Car> baseSpec = CarSpecifications.belongsToUser(id);
+
+        Specification<Car> finalSpec = baseSpec
+                .and(CarSpecifications.hasBrand(brand))
+                .and(CarSpecifications.modelLike(model));
+
+        return carRepository.findAll(finalSpec, pageable).map(CarDTO::new);
     }
 
     public CarDTO insert(UUID id, CarPostDTO car) {
