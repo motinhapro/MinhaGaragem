@@ -12,8 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,8 +34,12 @@ public class FinanceController {
     }
 
     @GetMapping("/summary/total")
-    public ResponseEntity<TotalSpendingDTO> getTotalSpending(Authentication authentication) {
-        return ResponseEntity.ok().body(financeService.getTotalSpending(UUID.fromString(authentication.getName())));
+    public ResponseEntity<TotalSpendingDTO> getTotalSpending(
+            Authentication authentication,
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate
+    ) {
+        return ResponseEntity.ok().body(financeService.getTotalSpending(UUID.fromString(authentication.getName()), startDate, endDate));
     }
 
     @GetMapping("/summary/by-category")

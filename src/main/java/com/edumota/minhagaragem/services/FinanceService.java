@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,12 +17,9 @@ public class FinanceService {
 
     private final ExpenseRepository expenseRepository;
 
-    public TotalSpendingDTO getTotalSpending(UUID userId) {
-        BigDecimal total = expenseRepository.findTotalSpendingByUserId(userId);
-
-        if(total == null) {
-            total = BigDecimal.ZERO;
-        }
+    public TotalSpendingDTO getTotalSpending(UUID userId, LocalDate StartDate, LocalDate endDate) {
+        BigDecimal total = expenseRepository.findTotalSpendingByUserAndPeriod(userId, StartDate, endDate)
+                .orElse(BigDecimal.ZERO);
 
         return new TotalSpendingDTO(total);
     }
