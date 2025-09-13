@@ -8,6 +8,7 @@ import com.edumota.minhagaragem.exceptions.BadRequestException;
 import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import com.edumota.minhagaragem.repositories.CarRepository;
 import com.edumota.minhagaragem.repositories.ExpenseRepository;
+import com.edumota.minhagaragem.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +24,7 @@ public class ExpenseService {
     private final ExpenseRepository expenseRepository;
 
     private final CarRepository carRepository;
+    private final UserRepository userRepository;
 
     public Page<ExpenseDTO> findMyExpenses(UUID userId, Pageable pageable) {
         return expenseRepository.findByCar_User_Id(userId, pageable).map(ExpenseDTO::new);
@@ -52,44 +54,30 @@ public class ExpenseService {
         return expenseRepository.findByCar(car, pageable).map(ExpenseDTO::new);
     }
 
-    public void deleteMyExpenseByCar(Long carId, Long expenseId, UUID userId) {
-
-        var car = carRepository.findById(carId)
-                .orElseThrow(() -> new ResourceNotFoundException("Veículo não encontrado."));
-
-        if(!car.getUser().getId().equals(userId)) {
-            throw new AccessDeniedException("Acesso negado. Você não é proprietário desta veículo.");
-        }
+    public void deleteMyExpense(UUID userId, Long expenseId) {
 
         var expense = expenseRepository.findById(expenseId)
                         .orElseThrow(() -> new ResourceNotFoundException("Despesa não encontrada."));
 
-        if(!expense.getCar().getId().equals(carId)) {
-            throw new BadRequestException("Conflito de dados: A despesa não pertence ao veículo informado");
+        if(!expense.getCar().getUser().getId().equals(userId)) {
+            throw new AccessDeniedException("Acesso negado. Você não é proprietário desta despesa.");
         }
 
         expenseRepository.deleteById(expenseId);
     }
 
-    public ExpenseDTO updateMyExpenseByCar(ExpenseUpdateDTO newExpense, Long carId, Long expenseId, UUID userId) {
-
-        var car = carRepository.findById(carId)
-                .orElseThrow(() -> new ResourceNotFoundException("Veículo não encontrado."));
-
-        if(!car.getUser().getId().equals(userId)) {
-            throw new AccessDeniedException("Acesso negado. Você não é proprietário desta veículo.");
-        }
+    public ExpenseDTO updateMyExpense(UUID userId, Long expenseId, ExpenseUpdateDTO dto) {
 
         var expense = expenseRepository.findById(expenseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Despesa não encontrada."));
 
-        if(!expense.getCar().getId().equals(carId)) {
-            throw new BadRequestException("Conflito de dados: A despesa não pertence ao veículo informado");
+        if(!expense.getCar().getUser().getId().equals(userId)) {
+            throw new AccessDeniedException("Acesso negado. Você não é proprietário desta despesa.");
         }
 
-        expense.setPrice(newExpense.price());
-        expense.setDescription(newExpense.description());
-        expense.setExpenseType(newExpense.expenseType());
+        expense.setPrice(dto.price());
+        expense.setDescription(dto.description());
+        expense.setExpenseType(dto.expenseType());
 
         return new ExpenseDTO(expenseRepository.save(expense));
     }

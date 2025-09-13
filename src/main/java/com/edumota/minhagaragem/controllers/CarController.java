@@ -58,15 +58,4 @@ public class CarController {
     public ResponseEntity<Page<ExpenseDTO>> findMyExpensesByCar(@PathVariable Long id, Authentication authentication, Pageable pageable) {
         return ResponseEntity.ok().body(expenseService.findMyExpensesByCar(id, UUID.fromString(authentication.getName()), pageable));
     }
-
-    @DeleteMapping("/{id}/expenses/{expenseId}")
-    public ResponseEntity<Void> deleteMyExpenseByCar(@PathVariable Long id, @PathVariable Long expenseId, Authentication authentication) {
-        expenseService.deleteMyExpenseByCar(id, expenseId, UUID.fromString(authentication.getName()));
-        return ResponseEntity.noContent().build();
-    }
-
-    @PutMapping("/{id}/expenses/{expenseId}")
-    public ResponseEntity<ExpenseDTO> updateMyExpenseByCar(@RequestBody ExpenseUpdateDTO newExpense, @PathVariable Long id, @PathVariable Long expenseId, Authentication authentication) {
-        return ResponseEntity.ok().body(expenseService.updateMyExpenseByCar(newExpense, id, expenseId, UUID.fromString(authentication.getName())));
-    }
 }
