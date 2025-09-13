@@ -32,7 +32,7 @@ public class CarService {
         var user = userRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Usuário não encontrado."));
 
-        return new CarDTO(new Car(car.model(), car.brand(), car.year(), car.colour(), user));
+        return new CarDTO(carRepository.save(new Car(car.model(), car.brand(), car.year(), car.colour(), user)));
     }
 
     public void delete(Long id, UUID userId) {
