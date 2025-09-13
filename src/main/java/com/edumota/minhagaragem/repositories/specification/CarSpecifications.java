@@ -31,4 +31,23 @@ public class CarSpecifications {
             return criteriaBuilder.like(criteriaBuilder.lower(root.get("model")), "%" + model.toLowerCase() + "%");
         };
     }
+
+    public static Specification<Car> byYearRange(Integer minYear, Integer maxYear) {
+        return (root, query, criteriaBuilder) -> {
+
+            if(minYear != null && maxYear != null) {
+                return criteriaBuilder.between(root.get("year"), minYear, maxYear);
+            }
+
+            if(minYear != null) {
+                return criteriaBuilder.greaterThanOrEqualTo(root.get("year"), minYear);
+            }
+
+            if (maxYear != null) {
+                return criteriaBuilder.lessThanOrEqualTo(root.get("year"), maxYear);
+            }
+
+            return criteriaBuilder.conjunction();
+        };
+    }
 }

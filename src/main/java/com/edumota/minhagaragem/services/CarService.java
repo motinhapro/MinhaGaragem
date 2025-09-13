@@ -25,13 +25,14 @@ public class CarService {
 
     private final UserRepository userRepository;
 
-    public Page<CarDTO> findMyCars(UUID id, Pageable pageable, String brand, String model) {
+    public Page<CarDTO> findMyCars(UUID id, Pageable pageable, String brand, String model, Integer minYear, Integer maxYear) {
 
         Specification<Car> baseSpec = CarSpecifications.belongsToUser(id);
 
         Specification<Car> finalSpec = baseSpec
                 .and(CarSpecifications.hasBrand(brand))
-                .and(CarSpecifications.modelLike(model));
+                .and(CarSpecifications.modelLike(model))
+                .and(CarSpecifications.byYearRange(minYear, maxYear));
 
         return carRepository.findAll(finalSpec, pageable).map(CarDTO::new);
     }

@@ -31,8 +31,10 @@ public class CarController {
     @GetMapping
     public ResponseEntity<Page<CarDTO>> findMyCars(
             Authentication authentication, Pageable pageable,
-            @RequestParam(required = false) String brand, @RequestParam(required = false) String model) {
-        return ResponseEntity.ok().body(carService.findMyCars(UUID.fromString(authentication.getName()), pageable, brand, model));
+            @RequestParam(required = false) String brand, @RequestParam(required = false) String model,
+            @RequestParam(required = false) Integer minYear, @RequestParam(required = false) Integer maxYear)
+    {
+        return ResponseEntity.ok().body(carService.findMyCars(UUID.fromString(authentication.getName()), pageable, brand, model, minYear, maxYear));
     }
 
     @PostMapping
