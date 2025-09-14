@@ -4,17 +4,20 @@ import com.edumota.minhagaragem.domain.DTO.expense.ExpenseDTO;
 import com.edumota.minhagaragem.domain.DTO.expense.ExpensePostDTO;
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseUpdateDTO;
 import com.edumota.minhagaragem.domain.Expense;
-import com.edumota.minhagaragem.exceptions.BadRequestException;
+import com.edumota.minhagaragem.domain.enums.ExpenseType;
 import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import com.edumota.minhagaragem.repositories.CarRepository;
 import com.edumota.minhagaragem.repositories.ExpenseRepository;
 import com.edumota.minhagaragem.repositories.UserRepository;
+import com.edumota.minhagaragem.repositories.specification.ExpenseSpecifications;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -24,10 +27,19 @@ public class ExpenseService {
     private final ExpenseRepository expenseRepository;
 
     private final CarRepository carRepository;
+
     private final UserRepository userRepository;
 
-    public Page<ExpenseDTO> findMyExpenses(UUID userId, Pageable pageable) {
-        return expenseRepository.findByCar_User_Id(userId, pageable).map(ExpenseDTO::new);
+    public Page<ExpenseDTO> findMyExpenses(UUID userId, Pageable pageable, Long carId, ExpenseType type, LocalDate startDate, LocalDate endDate) {
+
+        Specification<Expense> baseSpec = ExpenseSpecifications.belongsToUser(userId);
+
+        Specification<Expense> finalSpec = baseSpec
+                .and(ExpenseSpecifications.belongsToCar(carId))
+                .and(ExpenseSpecifications.hasType(type))
+                .and(ExpenseSpecifications.isBetweenDates(startDate, endDate));
+
+        return expenseRepository.findAll(finalSpec, pageable).map(ExpenseDTO::new);
     }
 
     public ExpenseDTO insertMyExpenseByCar(ExpensePostDTO newExpense, Long carId, UUID userId) {

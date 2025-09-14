@@ -2,14 +2,17 @@ package com.edumota.minhagaragem.controllers;
 
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseDTO;
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseUpdateDTO;
+import com.edumota.minhagaragem.domain.enums.ExpenseType;
 import com.edumota.minhagaragem.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -20,8 +23,14 @@ public class ExpenseController {
     private final ExpenseService expenseService;
 
     @GetMapping()
-    public ResponseEntity<Page<ExpenseDTO>> findMyExpenses(Authentication authentication, Pageable pageable) {
-        return ResponseEntity.ok().body(expenseService.findMyExpenses(UUID.fromString(authentication.getName()), pageable));
+    public ResponseEntity<Page<ExpenseDTO>> findMyExpenses(
+            Authentication authentication, Pageable pageable,
+            @RequestParam(required = false) Long carId,
+            @RequestParam(required = false)ExpenseType type,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+    ) {
+        return ResponseEntity.ok().body(expenseService.findMyExpenses(UUID.fromString(authentication.getName()), pageable, carId, type, startDate, endDate));
     }
 
     @PutMapping("/{id}")
