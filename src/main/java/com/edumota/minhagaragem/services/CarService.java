@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -25,14 +26,15 @@ public class CarService {
 
     private final UserRepository userRepository;
 
-    public Page<CarDTO> findMyCars(UUID id, Pageable pageable, String brand, String model, Integer minYear, Integer maxYear) {
+    public Page<CarDTO> findMyCars(UUID id, Pageable pageable, String brand, String model, Integer minYear, Integer maxYear, LocalDate startDate, LocalDate endDate) {
 
         Specification<Car> baseSpec = CarSpecifications.belongsToUser(id);
 
         Specification<Car> finalSpec = baseSpec
                 .and(CarSpecifications.hasBrand(brand))
                 .and(CarSpecifications.modelLike(model))
-                .and(CarSpecifications.byYearRange(minYear, maxYear));
+                .and(CarSpecifications.byYearRange(minYear, maxYear))
+                .and(CarSpecifications.acquiredBetweenDate(startDate, endDate));
 
         return carRepository.findAll(finalSpec, pageable).map(CarDTO::new);
     }

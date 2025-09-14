@@ -11,11 +11,13 @@ import com.edumota.minhagaragem.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 
@@ -32,9 +34,12 @@ public class CarController {
     public ResponseEntity<Page<CarDTO>> findMyCars(
             Authentication authentication, Pageable pageable,
             @RequestParam(required = false) String brand, @RequestParam(required = false) String model,
-            @RequestParam(required = false) Integer minYear, @RequestParam(required = false) Integer maxYear)
+            @RequestParam(required = false) Integer minYear, @RequestParam(required = false) Integer maxYear,
+            @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+            )
     {
-        return ResponseEntity.ok().body(carService.findMyCars(UUID.fromString(authentication.getName()), pageable, brand, model, minYear, maxYear));
+        return ResponseEntity.ok().body(carService.findMyCars(UUID.fromString(authentication.getName()), pageable, brand, model, minYear, maxYear, startDate, endDate));
     }
 
     @PostMapping

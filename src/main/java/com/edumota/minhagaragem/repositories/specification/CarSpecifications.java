@@ -3,6 +3,7 @@ package com.edumota.minhagaragem.repositories.specification;
 import com.edumota.minhagaragem.domain.Car;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class CarSpecifications {
@@ -45,6 +46,25 @@ public class CarSpecifications {
 
             if (maxYear != null) {
                 return criteriaBuilder.lessThanOrEqualTo(root.get("year"), maxYear);
+            }
+
+            return criteriaBuilder.conjunction();
+        };
+    }
+
+    public static Specification<Car> acquiredBetweenDate(LocalDate startDate, LocalDate endDate) {
+        return (root, query, criteriaBuilder) -> {
+
+            if(startDate != null && endDate != null) {
+                return criteriaBuilder.between(root.get("date"), startDate, endDate);
+            }
+
+            if(startDate != null) {
+                return criteriaBuilder.greaterThanOrEqualTo(root.get("date"), startDate);
+            }
+
+            if(endDate != null) {
+                return criteriaBuilder.lessThanOrEqualTo(root.get("date"), endDate);
             }
 
             return criteriaBuilder.conjunction();
