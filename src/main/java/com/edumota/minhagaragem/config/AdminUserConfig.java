@@ -1,6 +1,6 @@
 package com.edumota.minhagaragem.config;
 
-import com.edumota.minhagaragem.domain.User;
+import com.edumota.minhagaragem.domain.entities.User;
 import com.edumota.minhagaragem.repositories.RoleRepository;
 import com.edumota.minhagaragem.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

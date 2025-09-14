@@ -1,6 +1,6 @@
 package com.edumota.minhagaragem.domain.DTO.car;
 
-import com.edumota.minhagaragem.domain.Car;
+import com.edumota.minhagaragem.domain.entities.Car;
 
 import java.time.Instant;
 

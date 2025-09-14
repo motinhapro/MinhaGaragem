@@ -1,4 +1,4 @@
-package com.edumota.minhagaragem.domain;
+package com.edumota.minhagaragem.domain.entities;
 
 import com.edumota.minhagaragem.domain.enums.ExpenseType;
 import jakarta.persistence.*;

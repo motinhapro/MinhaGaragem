@@ -1,6 +1,6 @@
 package com.edumota.minhagaragem.services;
 
-import com.edumota.minhagaragem.domain.Car;
+import com.edumota.minhagaragem.domain.entities.Car;
 import com.edumota.minhagaragem.domain.DTO.car.CarDTO;
 import com.edumota.minhagaragem.domain.DTO.car.CarPostDTO;
 import com.edumota.minhagaragem.domain.DTO.car.CarUpdateDTO;

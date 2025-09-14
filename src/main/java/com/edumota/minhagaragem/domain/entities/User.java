@@ -1,4 +1,4 @@
-package com.edumota.minhagaragem.domain;
+package com.edumota.minhagaragem.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

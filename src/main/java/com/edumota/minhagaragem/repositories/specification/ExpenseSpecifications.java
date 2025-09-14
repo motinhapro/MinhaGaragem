@@ -1,6 +1,6 @@
 package com.edumota.minhagaragem.repositories.specification;
 
-import com.edumota.minhagaragem.domain.Expense;
+import com.edumota.minhagaragem.domain.entities.Expense;
 import com.edumota.minhagaragem.domain.enums.ExpenseType;
 import org.springframework.data.jpa.domain.Specification;
 

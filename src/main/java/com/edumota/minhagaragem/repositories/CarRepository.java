@@ -1,6 +1,6 @@
 package com.edumota.minhagaragem.repositories;
 
-import com.edumota.minhagaragem.domain.Car;
+import com.edumota.minhagaragem.domain.entities.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

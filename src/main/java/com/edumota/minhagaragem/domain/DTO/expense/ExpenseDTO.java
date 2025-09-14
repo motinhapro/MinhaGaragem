@@ -1,7 +1,7 @@
 package com.edumota.minhagaragem.domain.DTO.expense;
 
-import com.edumota.minhagaragem.domain.Car;
-import com.edumota.minhagaragem.domain.Expense;
+import com.edumota.minhagaragem.domain.entities.Car;
+import com.edumota.minhagaragem.domain.entities.Expense;
 import com.edumota.minhagaragem.domain.enums.ExpenseType;
 
 import java.math.BigDecimal;

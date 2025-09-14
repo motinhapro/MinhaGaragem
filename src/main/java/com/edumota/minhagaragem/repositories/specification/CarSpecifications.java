@@ -1,6 +1,6 @@
 package com.edumota.minhagaragem.repositories.specification;
 
-import com.edumota.minhagaragem.domain.Car;
+import com.edumota.minhagaragem.domain.entities.Car;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;

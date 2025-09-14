@@ -3,7 +3,7 @@ package com.edumota.minhagaragem.services;
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseDTO;
 import com.edumota.minhagaragem.domain.DTO.expense.ExpensePostDTO;
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseUpdateDTO;
-import com.edumota.minhagaragem.domain.Expense;
+import com.edumota.minhagaragem.domain.entities.Expense;
 import com.edumota.minhagaragem.domain.enums.ExpenseType;
 import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import com.edumota.minhagaragem.repositories.CarRepository;

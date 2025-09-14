@@ -3,7 +3,7 @@ package com.edumota.minhagaragem.services;
 import com.edumota.minhagaragem.domain.DTO.auth.AuthResponseDTO;
 import com.edumota.minhagaragem.domain.DTO.auth.LoginRequestDTO;
 import com.edumota.minhagaragem.domain.DTO.auth.RegisterRequestDTO;
-import com.edumota.minhagaragem.domain.User;
+import com.edumota.minhagaragem.domain.entities.User;
 import com.edumota.minhagaragem.exceptions.EmailAlreadyExistsException;
 import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import com.edumota.minhagaragem.repositories.RoleRepository;

@@ -1,6 +1,6 @@
 package com.edumota.minhagaragem.repositories;
 
-import com.edumota.minhagaragem.domain.Role;
+import com.edumota.minhagaragem.domain.entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

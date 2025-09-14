@@ -1,9 +1,9 @@
 package com.edumota.minhagaragem.config;
 
-import com.edumota.minhagaragem.domain.Car;
-import com.edumota.minhagaragem.domain.Expense;
-import com.edumota.minhagaragem.domain.Role;
-import com.edumota.minhagaragem.domain.User;
+import com.edumota.minhagaragem.domain.entities.Car;
+import com.edumota.minhagaragem.domain.entities.Expense;
+import com.edumota.minhagaragem.domain.entities.Role;
+import com.edumota.minhagaragem.domain.entities.User;
 import com.edumota.minhagaragem.domain.enums.ExpenseType;
 import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import com.edumota.minhagaragem.repositories.CarRepository;

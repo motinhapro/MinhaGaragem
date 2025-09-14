@@ -1,8 +1,8 @@
 package com.edumota.minhagaragem.repositories;
 
-import com.edumota.minhagaragem.domain.Car;
+import com.edumota.minhagaragem.domain.entities.Car;
 import com.edumota.minhagaragem.domain.DTO.finance.SpendingByCategoryDTO;
-import com.edumota.minhagaragem.domain.Expense;
+import com.edumota.minhagaragem.domain.entities.Expense;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
