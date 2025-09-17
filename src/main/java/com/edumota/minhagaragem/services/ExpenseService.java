@@ -2,9 +2,9 @@ package com.edumota.minhagaragem.services;
 
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseDTO;
 import com.edumota.minhagaragem.domain.DTO.expense.ExpensePostDTO;
+import com.edumota.minhagaragem.domain.DTO.expense.ExpenseSearchFilterDTO;
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseUpdateDTO;
 import com.edumota.minhagaragem.domain.entities.Expense;
-import com.edumota.minhagaragem.domain.enums.ExpenseType;
 import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import com.edumota.minhagaragem.repositories.CarRepository;
 import com.edumota.minhagaragem.repositories.ExpenseRepository;
@@ -17,7 +17,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -30,14 +29,14 @@ public class ExpenseService {
 
     private final UserRepository userRepository;
 
-    public Page<ExpenseDTO> findMyExpenses(UUID userId, Pageable pageable, Long carId, ExpenseType type, LocalDate startDate, LocalDate endDate) {
+    public Page<ExpenseDTO> findMyExpenses(UUID userId, Pageable pageable, ExpenseSearchFilterDTO filters) {
 
         Specification<Expense> baseSpec = ExpenseSpecifications.belongsToUser(userId);
 
         Specification<Expense> finalSpec = baseSpec
-                .and(ExpenseSpecifications.belongsToCar(carId))
-                .and(ExpenseSpecifications.hasType(type))
-                .and(ExpenseSpecifications.isBetweenDates(startDate, endDate));
+                .and(ExpenseSpecifications.belongsToCar(filters.carId()))
+                .and(ExpenseSpecifications.hasType(filters.type()))
+                .and(ExpenseSpecifications.isBetweenDates(filters.expenseDateStart(), filters.expenseDateEnd()));
 
         return expenseRepository.findAll(finalSpec, pageable).map(ExpenseDTO::new);
     }
