@@ -2,10 +2,12 @@ package com.edumota.minhagaragem.controllers;
 
 import com.edumota.minhagaragem.domain.DTO.finance.SpendingByCategoryDTO;
 import com.edumota.minhagaragem.domain.DTO.finance.TotalSpendingDTO;
+import com.edumota.minhagaragem.domain.entities.User;
 import com.edumota.minhagaragem.services.FinanceService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -24,15 +25,14 @@ public class FinanceController {
 
     @GetMapping("/summary/total")
     public ResponseEntity<TotalSpendingDTO> getTotalSpending(
-            Authentication authentication,
-            @RequestParam(required = false) LocalDate startDate,
-            @RequestParam(required = false) LocalDate endDate
-    ) {
-        return ResponseEntity.ok().body(financeService.getTotalSpending(UUID.fromString(authentication.getName()), startDate, endDate));
+            @AuthenticationPrincipal User userDetails,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return ResponseEntity.ok(financeService.getTotalSpending(userDetails.getId(), startDate, endDate));
     }
 
     @GetMapping("/summary/by-category")
-    public ResponseEntity<List<SpendingByCategoryDTO>> getSpendingByType(Authentication authentication) {
-        return ResponseEntity.ok().body(financeService.getSpendingByType(UUID.fromString(authentication.getName())));
+    public ResponseEntity<List<SpendingByCategoryDTO>> getSpendingByType(@AuthenticationPrincipal User userDetails) {
+        return ResponseEntity.ok(financeService.getSpendingByType(userDetails.getId()));
     }
 }
