@@ -2,6 +2,7 @@ package com.edumota.minhagaragem.services;
 
 import com.edumota.minhagaragem.domain.DTO.client.ClientDTO;
 import com.edumota.minhagaragem.domain.DTO.client.ClientPostDTO;
+import com.edumota.minhagaragem.domain.DTO.client.ClientPutDTO;
 import com.edumota.minhagaragem.domain.entities.Client;
 import com.edumota.minhagaragem.exceptions.ResourceNotFoundException;
 import com.edumota.minhagaragem.repositories.ClientRepository;
@@ -52,5 +53,21 @@ public class ClientService {
         }
 
         clientRepository.deleteById(clientId);
+    }
+
+    public ClientDTO update(Long clientId, ClientPutDTO dto, UUID userId) {
+
+        var client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado."));
+
+        if(!client.getUser().getId().equals(userId)) {
+            throw new AccessDeniedException("Acesso negado. Você não é proprietário desse cliente");
+        }
+
+        client.setName(dto.name());
+        client.setNumber(dto.number());
+        client.setEmail(dto.email());
+
+        return new ClientDTO(clientRepository.save(client));
     }
 }

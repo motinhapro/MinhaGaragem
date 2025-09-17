@@ -2,6 +2,7 @@ package com.edumota.minhagaragem.controllers;
 
 import com.edumota.minhagaragem.domain.DTO.client.ClientDTO;
 import com.edumota.minhagaragem.domain.DTO.client.ClientPostDTO;
+import com.edumota.minhagaragem.domain.DTO.client.ClientPutDTO;
 import com.edumota.minhagaragem.domain.entities.User;
 import com.edumota.minhagaragem.services.ClientService;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +38,10 @@ public class ClientController {
     public ResponseEntity<Void> delete(@PathVariable Long id, @AuthenticationPrincipal User userDetails) {
         clientService.delete(id, userDetails.getId());
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClientDTO> update(@PathVariable Long id, @RequestBody ClientPutDTO client, @AuthenticationPrincipal User userDetails) {
+        return ResponseEntity.ok().body(clientService.update(id, client, userDetails.getId()));
     }
 }
