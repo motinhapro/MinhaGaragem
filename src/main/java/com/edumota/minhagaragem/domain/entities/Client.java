@@ -28,10 +28,10 @@ public class Client {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Client(User user, String number, String email, String name) {
-        this.user = user;
-        this.number = number;
-        this.email = email;
+    public Client(String name, String email, String number, User user) {
         this.name = name;
+        this.email = email;
+        this.number = number;
+        this.user = user;
     }
 }
