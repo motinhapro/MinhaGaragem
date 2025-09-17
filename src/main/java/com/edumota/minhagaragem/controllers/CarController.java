@@ -2,6 +2,7 @@ package com.edumota.minhagaragem.controllers;
 
 import com.edumota.minhagaragem.domain.DTO.car.CarDTO;
 import com.edumota.minhagaragem.domain.DTO.car.CarPostDTO;
+import com.edumota.minhagaragem.domain.DTO.car.CarSearchFilterDTO;
 import com.edumota.minhagaragem.domain.DTO.car.CarUpdateDTO;
 import com.edumota.minhagaragem.domain.DTO.expense.ExpenseDTO;
 import com.edumota.minhagaragem.domain.DTO.expense.ExpensePostDTO;
@@ -11,13 +12,10 @@ import com.edumota.minhagaragem.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 
 
 @RequiredArgsConstructor
@@ -31,13 +29,11 @@ public class CarController {
 
     @GetMapping
     public ResponseEntity<Page<CarDTO>> findMyCars(
-            @AuthenticationPrincipal User userDetails, Pageable pageable,
-            @RequestParam(required = false) String brand, @RequestParam(required = false) String model,
-            @RequestParam(required = false) Integer minYear, @RequestParam(required = false) Integer maxYear,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate)
+            @AuthenticationPrincipal User userDetails,
+            Pageable pageable,
+            CarSearchFilterDTO filters)
     {
-        return ResponseEntity.ok(carService.findMyCars(userDetails.getId(), pageable, brand, model, minYear, maxYear, startDate, endDate));
+        return ResponseEntity.ok(carService.findMyCars(userDetails.getId(), pageable, filters));
     }
 
     @PostMapping
