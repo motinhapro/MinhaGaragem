@@ -5,13 +5,12 @@ import com.edumota.minhagaragem.domain.DTO.client.ClientPostDTO;
 import com.edumota.minhagaragem.domain.entities.User;
 import com.edumota.minhagaragem.services.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,5 +22,14 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<ClientDTO> insert(@RequestBody ClientPostDTO client, @AuthenticationPrincipal User userDetails) {
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.insert(userDetails.getId(), client));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ClientDTO>> findMyClients(
+            @AuthenticationPrincipal User userDetails,
+            Pageable pageable,
+            @RequestParam(required = false) String name
+    ) {
+        return ResponseEntity.ok().body(clientService.findMyClients(userDetails.getId(), pageable, name));
     }
 }
