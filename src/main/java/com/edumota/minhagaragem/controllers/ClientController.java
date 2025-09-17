@@ -32,4 +32,10 @@ public class ClientController {
     ) {
         return ResponseEntity.ok().body(clientService.findMyClients(userDetails.getId(), pageable, name));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id, @AuthenticationPrincipal User userDetails) {
+        clientService.delete(id, userDetails.getId());
+        return ResponseEntity.noContent().build();
+    }
 }

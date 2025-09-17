@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.security.access.AccessDeniedException;
 
 import java.util.UUID;
 
@@ -39,5 +40,17 @@ public class ClientService {
                 .and(ClientSpecifications.withNameLike(name));
 
         return clientRepository.findAll(finalSpec, pageable).map(ClientDTO::new);
+    }
+
+    public void delete(Long clientId, UUID userId) {
+
+        var client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente não encontrado."));
+
+        if(!client.getUser().getId().equals(userId)) {
+            throw new AccessDeniedException("Acesso negado. Você não é proprietário desse cliente");
+        }
+
+        clientRepository.deleteById(clientId);
     }
 }
