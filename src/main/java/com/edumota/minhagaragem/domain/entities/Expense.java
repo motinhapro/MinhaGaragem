@@ -45,7 +45,7 @@ public class Expense extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ExpenseStatus status;
+    private ExpenseStatus status = ExpenseStatus.PENDING;
 
     public Expense(BigDecimal amount, ExpenseCategory expenseCategory, String description, Car car, ExpenseStatus status) {
         this.amount = amount;
