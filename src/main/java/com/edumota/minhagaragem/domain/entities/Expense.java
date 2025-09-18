@@ -43,6 +43,10 @@ public class Expense extends BaseEntity {
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ExpenseStatus status;
+
     public Expense(BigDecimal price, ExpenseCategory expenseCategory, String description, Car car) {
         this.amount = price;
         this.category = expenseCategory;
