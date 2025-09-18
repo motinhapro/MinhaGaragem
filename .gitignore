@@ -7,6 +7,8 @@ src/main/resources/application.properties
 docker-compose.yml
 src/main/resources/private.key
 src/main/resources/public.pem
+src/main/java/com/edumota/minhagaragem/config/DataSeederConfig.java
+src/main/java/com/edumota/minhagaragem/config/AdminUserConfig.java
 
 ### STS ###
 .apt_generated
