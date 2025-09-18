@@ -17,11 +17,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_expenses")
-public class Expense {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Expense extends BaseEntity {
 
     @Column(name = "price", nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
