@@ -47,10 +47,11 @@ public class Expense extends BaseEntity {
     @Column(nullable = false)
     private ExpenseStatus status;
 
-    public Expense(BigDecimal price, ExpenseCategory expenseCategory, String description, Car car) {
-        this.amount = price;
+    public Expense(BigDecimal amount, ExpenseCategory expenseCategory, String description, Car car, ExpenseStatus status) {
+        this.amount = amount;
         this.category = expenseCategory;
         this.description = description;
         this.car = car;
+        this.status = status != null ? status : ExpenseStatus.PENDING;
     }
 }
