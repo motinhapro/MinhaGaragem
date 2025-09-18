@@ -1,6 +1,7 @@
 package com.edumota.minhagaragem.domain.entities;
 
 import com.edumota.minhagaragem.domain.enums.ExpenseCategory;
+import com.edumota.minhagaragem.domain.enums.ExpenseStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Positive;
@@ -22,17 +23,17 @@ import java.time.Instant;
 @Table(name = "tb_expenses")
 public class Expense extends BaseEntity {
 
-    @Column(name = "price", nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false, precision = 10, scale = 2)
     @Positive(message = "O preço deve ser maior que zero.")
     @DecimalMax(value = "1000000.00", message = "O preço não pode exceder R$ 1.000.000,00")
-    private BigDecimal price;
+    private BigDecimal amount;
 
     @Size(max = 500, message = "A descrição não pode ter mais de 500 caracteres")
     private String description;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
-    private ExpenseCategory expenseCategory;
+    @Column(nullable = false)
+    private ExpenseCategory category;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -43,8 +44,8 @@ public class Expense extends BaseEntity {
     private Car car;
 
     public Expense(BigDecimal price, ExpenseCategory expenseCategory, String description, Car car) {
-        this.price = price;
-        this.expenseCategory = expenseCategory;
+        this.amount = price;
+        this.category = expenseCategory;
         this.description = description;
         this.car = car;
     }
