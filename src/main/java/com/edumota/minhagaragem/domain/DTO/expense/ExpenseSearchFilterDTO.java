@@ -1,12 +1,12 @@
 package com.edumota.minhagaragem.domain.DTO.expense;
 
-import com.edumota.minhagaragem.domain.enums.ExpenseType;
+import com.edumota.minhagaragem.domain.enums.ExpenseCategory;
 
 import java.time.LocalDate;
 
 public record ExpenseSearchFilterDTO(
         Long carId,
-        ExpenseType type,
+        ExpenseCategory type,
         LocalDate expenseDateStart,
         LocalDate expenseDateEnd
 ) {

@@ -1,7 +1,7 @@
 package com.edumota.minhagaragem.repositories.specification;
 
 import com.edumota.minhagaragem.domain.entities.Expense;
-import com.edumota.minhagaragem.domain.enums.ExpenseType;
+import com.edumota.minhagaragem.domain.enums.ExpenseCategory;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
@@ -14,7 +14,7 @@ public class ExpenseSpecifications {
                 criteriaBuilder.equal(root.get("car").get("user").get(("id")), userId));
     }
 
-    public static Specification<Expense> hasType(ExpenseType type) {
+    public static Specification<Expense> hasType(ExpenseCategory type) {
         return (root, query, criteriaBuilder) -> {
             if (type == null) {
                 return criteriaBuilder.conjunction();

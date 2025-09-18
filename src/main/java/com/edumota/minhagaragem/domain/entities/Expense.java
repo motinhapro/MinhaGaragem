@@ -1,6 +1,6 @@
 package com.edumota.minhagaragem.domain.entities;
 
-import com.edumota.minhagaragem.domain.enums.ExpenseType;
+import com.edumota.minhagaragem.domain.enums.ExpenseCategory;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.Positive;
@@ -32,7 +32,7 @@ public class Expense extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    private ExpenseType expenseType;
+    private ExpenseCategory expenseCategory;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -42,9 +42,9 @@ public class Expense extends BaseEntity {
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
-    public Expense(BigDecimal price, ExpenseType expenseType, String description, Car car) {
+    public Expense(BigDecimal price, ExpenseCategory expenseCategory, String description, Car car) {
         this.price = price;
-        this.expenseType = expenseType;
+        this.expenseCategory = expenseCategory;
         this.description = description;
         this.car = car;
     }

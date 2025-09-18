@@ -50,7 +50,7 @@ public class ExpenseService {
             throw new AccessDeniedException("Acesso negado. Você não é proprietário deste veículo.");
         }
 
-        return new ExpenseDTO(expenseRepository.save(new Expense(newExpense.price(), newExpense.expenseType(), newExpense.description(), car)));
+        return new ExpenseDTO(expenseRepository.save(new Expense(newExpense.price(), newExpense.expenseCategory(), newExpense.description(), car)));
     }
 
     public Page<ExpenseDTO> findMyExpensesByCar(Long carId, UUID userId, Pageable pageable) {
@@ -88,7 +88,7 @@ public class ExpenseService {
 
         expense.setPrice(dto.price());
         expense.setDescription(dto.description());
-        expense.setExpenseType(dto.expenseType());
+        expense.setExpenseCategory(dto.expenseCategory());
 
         return new ExpenseDTO(expenseRepository.save(expense));
     }
