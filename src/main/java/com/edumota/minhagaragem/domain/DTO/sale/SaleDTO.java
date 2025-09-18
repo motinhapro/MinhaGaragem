@@ -1,5 +1,6 @@
 package com.edumota.minhagaragem.domain.DTO.sale;
 
+import com.edumota.minhagaragem.domain.entities.Sale;
 import com.edumota.minhagaragem.domain.enums.SaleStatus;
 
 import java.math.BigDecimal;
@@ -13,4 +14,8 @@ public record SaleDTO(
         BigDecimal price,
         SaleStatus status,
         Instant createdAt) {
+
+    public SaleDTO(Sale sale) {
+        this(sale.getId(), sale.getClient().getName(), sale.getCar().getModel(), sale.getPrice(), sale.getSaleStatus(), sale.getCreatedAt());
+    }
 }
